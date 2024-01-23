@@ -51,9 +51,9 @@ public class OrderService {
 //                .bodyToMono(InventoryResponse[].class)
 //                .block();
 
-        String baseURL = "http://localhost:7002/api/inventory";
+//        String baseURL = "http://inventory_service/api/inventory";
 
-        String url = UriComponentsBuilder.fromUriString(baseURL)
+        String url = UriComponentsBuilder.fromUriString("http://inventoryservice/api/inventory")
                 .queryParam("skuCode",skuCodes)
                 .toUriString();
 
