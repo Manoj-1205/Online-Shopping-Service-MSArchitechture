@@ -7,9 +7,12 @@ import com.microservices.orderservice.repository.OrderRepository;
 import com.microservices.orderservice.model.Order;
 import com.microservices.orderservice.model.OrderLineItems;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +25,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final WebClient webClient;
+    private final RestTemplate restTemplate;
 
     public void placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -40,14 +44,24 @@ public class OrderService {
 
         // Call Inventory Service, and place order if product is in
         // stock
-        InventoryResponse[] inventoryResponsArray = webClient.get()
-                .uri("http://localhost:7002/api/inventory",
-                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
-                .retrieve()
-                .bodyToMono(InventoryResponse[].class)
-                .block();
+//        InventoryResponse[] inventoryResponsArray = webClient.get()
+//                .uri("http://localhost:7002/api/inventory",
+//                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+//                .retrieve()
+//                .bodyToMono(InventoryResponse[].class)
+//                .block();
 
-        boolean allProductsInStock = Arrays.stream(inventoryResponsArray)
+        String baseURL = "http://localhost:7002/api/inventory";
+
+        String url = UriComponentsBuilder.fromUriString(baseURL)
+                .queryParam("skuCode",skuCodes)
+                .toUriString();
+
+        ResponseEntity<InventoryResponse[]> inventoryResponses = restTemplate.getForEntity(
+                url,
+                InventoryResponse[].class
+        );
+        boolean allProductsInStock = Arrays.stream(inventoryResponses.getBody())
                 .allMatch(InventoryResponse::isInStock);
 
         if(allProductsInStock){
