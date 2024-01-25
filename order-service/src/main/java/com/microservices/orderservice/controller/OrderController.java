@@ -20,9 +20,10 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+//    @Retry(name = "Inventory")
     @CircuitBreaker(name="Inventory", fallbackMethod = "fallBackMethod")
-    @TimeLimiter(name = "Inventory")
-    @Retry(name = "Inventory")
+    @TimeLimiter(name = "Inventory", fallbackMethod = "fallBackMethodTimeout")
+
     public CompletableFuture<String> placeOrder(@RequestBody OrderRequest orderRequest) {
         return CompletableFuture.supplyAsync(() -> orderService.placeOrder(orderRequest));
 
@@ -33,7 +34,7 @@ public class OrderController {
         return CompletableFuture.supplyAsync(() -> "Oops! Something went wrong. Try again later.");
     }
 
-    public CompletableFuture<String> fallBackMethodTimeout(OrderRequest orderRequest, RuntimeException exception){
+    public CompletableFuture<String> fallBackMethodTimeout(OrderRequest orderRequest, Exception exception){
         System.out.println("Exception thrown : "+exception);
         return CompletableFuture.supplyAsync(() -> "Operation TimedOut..");
     }
