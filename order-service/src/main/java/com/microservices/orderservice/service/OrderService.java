@@ -6,6 +6,8 @@ import com.microservices.orderservice.dto.OrderRequest;
 import com.microservices.orderservice.repository.OrderRepository;
 import com.microservices.orderservice.model.Order;
 import com.microservices.orderservice.model.OrderLineItems;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +30,8 @@ public class OrderService {
     private final WebClient webClient;
     private final RestTemplate restTemplate;
 
-    public void placeOrder(OrderRequest orderRequest) {
+
+    public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
 
@@ -57,19 +61,25 @@ public class OrderService {
                 .queryParam("skuCode",skuCodes)
                 .toUriString();
 
+        System.out.println("URL "+url);
+
         ResponseEntity<InventoryResponse[]> inventoryResponses = restTemplate.getForEntity(
                 url,
                 InventoryResponse[].class
         );
+        System.out.println("Aray "+inventoryResponses.getBody());
         boolean allProductsInStock = Arrays.stream(inventoryResponses.getBody())
                 .allMatch(InventoryResponse::isInStock);
 
         if(allProductsInStock){
             orderRepository.save(order);
+            return "ORDER PLACED SUCCESSFULLY";
         } else {
             throw new IllegalArgumentException("Product is not in stock, please try again later");
         }
     }
+
+
 
     private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
         OrderLineItems orderLineItems = new OrderLineItems();

@@ -6,10 +6,10 @@ import com.microservices.productservicems.dto.ProductResponse;
 import com.microservices.productservicems.model.Product;
 import com.microservices.productservicems.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +43,12 @@ public class ProductService {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .build();
+    }
+
+    public ProductResponse getSingleProduct(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isEmpty())
+            throw new IllegalArgumentException("Product Not found");
+        return mapToProductResponse(product.get());
     }
 }
