@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0dff9dc1-ed27-4835-af9b-b77dbe053e3a" name="Changes" comment="Resilience4J circuit breaker implementation">
+    <list default="true" id="0dff9dc1-ed27-4835-af9b-b77dbe053e3a" name="Changes" comment="Working model - 0 error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/product-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-service/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="04a615e89f8ede79253510ffba2621b28f66f2fe" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +58,7 @@
     &quot;Spring Boot.InventoryServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.OrderServiceApplication.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.ProductServiceMsApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Distrubuted-Tracing&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Manoj/Intellij Java/UserService&quot;,
@@ -220,6 +221,8 @@
       <workItem from="1706062592165" duration="11635000" />
       <workItem from="1706150829125" duration="7512000" />
       <workItem from="1706200278468" duration="1756000" />
+      <workItem from="1706262390716" duration="1195000" />
+      <workItem from="1706290024133" duration="1779000" />
     </task>
     <task id="LOCAL-00001" summary="Inter process communication using web client">
       <option name="closed" value="true" />
@@ -253,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706201576332</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Working model - 0 error">
+      <option name="closed" value="true" />
+      <created>1706249511300</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706249511300</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -276,6 +287,7 @@
     <MESSAGE value="Service discovery" />
     <MESSAGE value="API Gateway implementation using Spring cloud Gateway" />
     <MESSAGE value="Resilience4J circuit breaker implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Resilience4J circuit breaker implementation" />
+    <MESSAGE value="Working model - 0 error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working model - 0 error" />
   </component>
 </project>
